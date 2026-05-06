@@ -497,7 +497,10 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
               <span class="stack-tag">Cloudflare Pages</span>
               <span class="stack-tag">GitHub</span>
             </div>
-            <a href="https://k12retirementplanning.com" target="_blank" class="project-link">View Live Site →</a>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+              <a href="https://k12retirementplanning.com" target="_blank" class="project-link">View Live Site →</a>
+              <button class="project-link" onclick="openK12Arch()" style="color:rgba(245,242,237,.5);border-bottom-color:rgba(245,242,237,.15);">System Architecture Doc →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -554,7 +557,7 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
         </div>
         <div class="project-body">
           <div class="project-body-inner">
-            <p>This one has nothing to do with business. I play Dungeons and Dragons every 2 weeks with a group of my high school friends, and our Dungeon Master is a die-hard old-school paper-and-pencil purist — the kind of guy who physically winces when someone mentions an online dice roller. So naturally, I built him a fully automated campaign management dashboard and introduced it at the table as "our new way to play." The look on his face was worth every hour of development. Same instinct as everything else I build — see an inefficiency, ship a solution. The fact that the inefficiency was a human who enjoys graph paper is beside the point.</p>
+            <p>This one has nothing to do with business. Our Dungeon Master is a die-hard old-school paper-and-pencil purist — the kind of guy who physically winces when someone mentions an online dice roller. So naturally, I built him a fully automated campaign management dashboard and introduced it at the table as "our new way to play." The look on his face was worth every hour of development. Same instinct as everything else I build — see an inefficiency, ship a solution. The fact that the inefficiency was a human who enjoys graph paper is beside the point.</p>
             <ul class="project-highlights">
               <li>Multi-tab interface — Party, Combat, Magic, Luck, XP & Loot, Session Log, and Campaign settings</li>
               <li>Per-character HP tracking with bloodied/down states, conditions, and full/short rest logic</li>
@@ -791,6 +794,19 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
   </div>
 </div>
 
+<!-- K12 ARCHITECTURE OVERLAY -->
+<div class="overlay" id="k12ArchOverlay" onclick="closeK12ArchClick(event)">
+  <div class="lightbox" id="k12ArchLightbox">
+    <div class="lb-toolbar">
+      <span class="lb-toolbar-title">K12 Retirement Success System™ — System Architecture Document</span>
+      <div class="lb-toolbar-right">
+        <button class="lb-close" onclick="closeK12Arch()">✕</button>
+      </div>
+    </div>
+    <iframe class="lb-frame" id="k12ArchFrame" src="" title="K12 System Architecture"></iframe>
+  </div>
+</div>
+
 <!-- DND OVERLAY -->
 <div class="overlay" id="dndOverlay" onclick="closeDNDClick(event)">
   <div class="lightbox" id="dndLightbox">
@@ -855,8 +871,23 @@ function closeOverlayClick(e){
 }
 
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){ closeDemo(); closeGLP(); closeDND(); }
+  if(e.key === 'Escape'){ closeDemo(); closeGLP(); closeDND(); closeK12Arch(); }
 });
+
+// ── K12 Architecture lightbox ──
+function openK12Arch(){
+  document.getElementById('k12ArchFrame').src = 'k12_architecture.html';
+  document.getElementById('k12ArchOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeK12Arch(){
+  document.getElementById('k12ArchOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(()=>{ document.getElementById('k12ArchFrame').src = ''; }, 300);
+}
+function closeK12ArchClick(e){
+  if(e.target === document.getElementById('k12ArchOverlay')) closeK12Arch();
+}
 
 // ── DnD Campaign Tracker lightbox ──
 function openDND(){
